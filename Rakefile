@@ -24,7 +24,7 @@ task :build do
   gem_path = "codebase4-#{version}.gem"
   system "gem push #{gem_path}"
   system "rm #{gem_path}"
-  system "git add atech.gemspec"
+  system "git add codebase4.gemspec"
   system "git commit -m 'bump gem version to #{version}'"
   
   puts
