@@ -52,7 +52,7 @@ module Codebase
       
       puts "Sending deployment information to #{host} (project: '#{project}' repo: '#{repo}')"
       
-      puts "   Commits......: #{hash[:end_ref]} ... #{hash[:start_ref]}"
+      puts "   Commits......: #{hash[:start_ref]} ... #{hash[:end_ref]}"
       puts "   Environment..: #{hash[:environment] || '-'}"
       puts "   Branch.......: #{hash[:branch] || '-'}"
       puts "   Server(s)....: #{hash[:servers]}"
