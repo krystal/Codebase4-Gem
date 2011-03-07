@@ -30,7 +30,7 @@ module Codebase
       puts "Added token for '#{account_name}'"
     end
     
-    def deploy(end_ref, start_ref, *options)
+    def deploy(start_ref, end_ref, *options)
       options = options_to_hash(options)
       
       hash = {
