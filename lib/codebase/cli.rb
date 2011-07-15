@@ -13,7 +13,7 @@ module Codebase
       elsif cmd.respond_to?(command)
         cmd.send(command, *args)
       else
-        raise Error, "Command not found"
+        raise Error, "Command '#{command}' not found"
       end
     rescue Error => e
       $stderr.puts e.message
@@ -28,6 +28,20 @@ module Codebase
       Codebase.config.tokens[account_name] = token
       Codebase.config.save
       puts "Added token for '#{account_name}'"
+    end
+
+    def test(account_name)
+      token = Codebase.config.tokens.is_a?(Hash) && Codebase.config.tokens[account_name]
+      if token.nil?
+        raise Error, "This account has no token configured locally, use 'codebase token [account] [token]' to configure it"
+      end
+
+      begin
+        Codebase.request("https://#{account_name}/check_access_token", {:access_token => token})
+        puts "OK"
+      rescue
+        puts "Test failed, are your credentials in ~/.codebase4 correct?"
+      end
     end
     
     def deploy(start_ref, end_ref, *options)
@@ -70,7 +84,7 @@ module Codebase
       Codebase.request("#{protocol}://#{host}/projects/#{project}/repositories/#{repo}/deployments/add", hash)
       puts "Deployment added successfully"
     end
-    
+
     private
     
     def options_to_hash(options)
