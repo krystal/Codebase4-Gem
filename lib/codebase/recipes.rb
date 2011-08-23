@@ -15,17 +15,15 @@ Capistrano::Configuration.instance(:must_exist).load do
       
       branch = respond_to?(:branch) ? branch : 'master'
       
-      environment = String.new.tap do |s|
-        if respond_to?(:environment)
-          s << environment
-        elsif respond_to(:rails_env)
-          s << rails_env
-        end
+      if respond_to?(:environment)
+        environment = environment
+      elsif respond_to(:rails_env)
+        environment = rails_env
       end
       
       cmd << "-s #{roles.values.collect{|r| r.servers}.flatten.collect{|s| s.host}.uniq.join(',') rescue ''}"
       cmd << "-b #{branch}"
-      cmd << "-e #{environment}" if respond_to?(:environment) && environment
+      cmd << "-e #{environment}" if respond_to?(:environment)
       
       ## get the repo and project name etc...
       if fetch(:repository) =~ /git\@codebasehq.com\:(.+)\/(.+)\/(.+)\.git\z/
