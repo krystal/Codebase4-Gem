@@ -13,9 +13,19 @@ Capistrano::Configuration.instance(:must_exist).load do
 
       cmd = ["cb deploy #{previous_revision} #{current_revision}"]
       
+      branch = respond_to?(:branch) ? branch : 'master'
+      
+      environment = String.new.tap do |s|
+        if respond_to?(:environment)
+          s << environment
+        elsif respond_to(:rails_env)
+          s << rails_env
+        end
+      end
+      
       cmd << "-s #{roles.values.collect{|r| r.servers}.flatten.collect{|s| s.host}.uniq.join(',') rescue ''}"
-      cmd << "-b #{fetch(:branch)}"
-      #cmd << "-e #{fetch(:environment)}"
+      cmd << "-b #{branch}"
+      cmd << "-e #{environment}" if respond_to?(:environment) && environment
       
       ## get the repo and project name etc...
       if fetch(:repository) =~ /git\@codebasehq.com\:(.+)\/(.+)\/(.+)\.git\z/
