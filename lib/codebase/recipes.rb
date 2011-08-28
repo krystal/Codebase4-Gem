@@ -17,7 +17,7 @@ Capistrano::Configuration.instance(:must_exist).load do
       
       if respond_to?(:environment)
         environment = environment
-      elsif respond_to(:rails_env)
+      elsif respond_to?(:rails_env)
         environment = rails_env
       end
       
