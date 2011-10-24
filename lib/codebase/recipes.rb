@@ -18,7 +18,7 @@ Capistrano::Configuration.instance(:must_exist).load do
       if respond_to?(:environment)
         set :environment, environment
       elsif respond_to?(:rails_env)
-        set :environment = rails_env
+        set :environment, rails_env
       end
       
       cmd << "-s #{roles.values.collect{|r| r.servers}.flatten.collect{|s| s.host}.uniq.join(',') rescue ''}"
