@@ -32,7 +32,7 @@ module Codebase
 
     def test(account_name)
       token = Codebase.config.tokens.is_a?(Hash) && Codebase.config.tokens[account_name]
-      if token.nil?
+      unless token
         raise Error, "This account has no token configured locally, use 'codebase token [account] [token]' to configure it"
       end
 
