@@ -11,7 +11,7 @@ Capistrano::Configuration.instance(:must_exist).load do
         next
       end
 
-      cmd = ["cb deploy #{previous_revision} #{current_revision}"]
+      cmd = ["cb deploy #{previous_revision or "0000000000000000000000000000000000000000"} #{current_revision}"]
       
       set :branch, (respond_to?(:branch) ? branch : 'master')
       
