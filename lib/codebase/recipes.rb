@@ -1,6 +1,6 @@
 Capistrano::Configuration.instance(:must_exist).load do
 
-  after 'deploy:symlink', 'codebase:log_deployment'
+  after 'deploy:create_symlink', 'codebase:log_deployment'
 
   namespace :codebase do
     desc "Logs the deployment of your Codebase 4 repository"
