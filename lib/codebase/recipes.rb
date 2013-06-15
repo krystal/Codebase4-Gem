@@ -21,7 +21,7 @@ Capistrano::Configuration.instance(:must_exist).load do
         set :environment, rails_env
       end
       
-      cmd << "-s #{roles.values.collect{|r| r.servers}.flatten.collect{|s| s.host}.uniq.join(',') rescue ''}"
+      cmd << "-s #{roles.values.collect{|r| r.servers}.flatten.collect{|s| s.host}.uniq.join(',') rescue fetch(:rails_env)}"
       cmd << "-b #{branch}"
       cmd << "-e #{environment}" if respond_to?(:environment)
       
