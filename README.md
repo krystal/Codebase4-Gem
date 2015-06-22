@@ -17,4 +17,8 @@
 1. In order to automatically track deployments, you just need to include the Codebase recipes 
    in your Capfile - these are provided by the gem you have already installed.
 
+    ### Capistrano 2
         require 'codebase/recipes'
+        
+    ### Capistrano 3
+        require 'codebase/capistrano3'
