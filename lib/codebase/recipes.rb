@@ -12,19 +12,19 @@ Capistrano::Configuration.instance(:must_exist).load do
       end
 
       cmd = ["cb deploy #{previous_revision or "0000000000000000000000000000000000000000"} #{current_revision}"]
-      
+
       set :branch, (respond_to?(:branch) ? branch : 'master')
-      
+
       if respond_to?(:environment)
         set :environment, environment
       elsif respond_to?(:rails_env)
         set :environment, rails_env
       end
-      
+
       cmd << "-s #{roles.values.collect{|r| r.servers}.flatten.collect{|s| s.host}.uniq.join(',') rescue ''}"
       cmd << "-b #{branch}"
       cmd << "-e #{environment}" if respond_to?(:environment)
-      
+
       ## get the repo and project name etc...
       account, project, repo = nil, nil, nil
       case fetch(:repository)

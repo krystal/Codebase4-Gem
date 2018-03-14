@@ -6,26 +6,25 @@ require 'json'
 require 'codebase/config'
 
 module Codebase
-  
+
   class << self
 
     # Return the current configuration for the current machine
     def config
       @config ||= Config.init
     end
-    
+
     ## Make an HTTP request
     def request(url, data)
       uri = URI.parse(url)
       req = Net::HTTP::Post.new(uri.path)
       req.set_form_data(data, ';')
       res = Net::HTTP.new(uri.host, uri.port)
-      
+
       if uri.scheme == 'https'
         res.use_ssl = true
-        res.verify_mode = OpenSSL::SSL::VERIFY_NONE
       end
-      
+
       case res = res.request(req)
       when Net::HTTPSuccess
         JSON.parse(res.body)
@@ -36,8 +35,8 @@ module Codebase
         raise "An HTTP error occured (#{res.class})"
       end
     end
-    
+
   end
-  
+
 end
 

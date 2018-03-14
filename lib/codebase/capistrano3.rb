@@ -16,11 +16,11 @@ namespace :codebase do
     end
 
     cmd = ["cb deploy #{previous_revision or "0000000000000000000000000000000000000000"} #{current_revision}"]
-    
+
     cmd << "-s #{servers.uniq.join(',') rescue ''}"
     cmd << "-b #{branch}"
     cmd << "-e #{environment}"
-    
+
     ## get the repo and project name etc...
     account, project, repo = nil, nil, nil
     case repository
@@ -39,7 +39,6 @@ namespace :codebase do
 
     cmd << "-r #{project}:#{repo}"
     cmd << "-h #{account}.codebasehq.com"
-    cmd << "--protocol https"
 
     puts "   running: #{cmd.join(' ')}"
     system(cmd.join(' ') + "; true")
