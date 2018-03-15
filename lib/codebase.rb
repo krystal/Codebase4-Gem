@@ -18,7 +18,7 @@ module Codebase
     def request(url, data)
       uri = URI.parse(url)
       req = Net::HTTP::Post.new(uri.path)
-      req.set_form_data(data, ';')
+      req.set_form_data(data)
       res = Net::HTTP.new(uri.host, uri.port)
 
       if uri.scheme == 'https'
